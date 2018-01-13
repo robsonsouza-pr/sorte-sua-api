@@ -1,4 +1,4 @@
-package br.com.innovate.sortesuaapi.sortesuaapi;
+package br.com.innovate.sortesuaapi;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
