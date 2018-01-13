@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.com.innovate.sorte-sua-api</groupId>
-	<artifactId>sorte-sua-api</artifactId>
+	<groupId>br.com.innovate.sortesua</groupId>
+	<artifactId>sortesua</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>sorte-sua-api</name>
+	<name>sortesua</name>
 	<description>API Restfull para o sistema Sorte Sua</description>
 
 	<parent>
