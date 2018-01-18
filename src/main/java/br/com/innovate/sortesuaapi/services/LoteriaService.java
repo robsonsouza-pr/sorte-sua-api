@@ -19,4 +19,12 @@ public class LoteriaService {
 		return loteriaRepository.findAll();
 	}
 
+	public Loteria findByNome(String nome) {
+		return loteriaRepository.findByNome(nome);
+	}
+
+	public void cadastrar(Loteria loteria) {
+		loteriaRepository.save(loteria);		
+	}
+
 }
