@@ -101,7 +101,7 @@ public class LoteriaController {
 	
 	@GetMapping(value = "/detalhar/{id}")
 	public ResponseEntity<Response<LoteriaDto>> detalhar(@PathVariable("id") Long id){
-		log.info("Removendo  loteria: ", id);
+		log.info("Detalhando  loteria:{} ", id);
 		Response<LoteriaDto> response = new Response<LoteriaDto>();
 		Loteria loteria = loteriaService.find(id);
 		if(loteria == null) {
