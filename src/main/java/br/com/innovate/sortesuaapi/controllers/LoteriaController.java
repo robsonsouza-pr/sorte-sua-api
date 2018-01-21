@@ -12,8 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,6 +68,51 @@ public class LoteriaController {
 		response.setData(converterParaDto(loteria));
 		return ResponseEntity.ok(response);
 	}
+	
+	@PutMapping
+	public ResponseEntity<Response<LoteriaDto>> atualizar(@Valid @RequestBody LoteriaDto loteriaDto, BindingResult result){
+		log.info("Atualizando  uma loteria");
+		Response<LoteriaDto> response = new Response<LoteriaDto>();
+		validarLoteriaAtualizacao(loteriaDto, result);
+		if(result.hasErrors()) {
+			log.error("Erro validando dados de cadastro de Loteria: {}", result.getAllErrors());
+			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+			return ResponseEntity.badRequest().body(response);
+		}
+		Loteria loteria = converterParaEntidade(loteriaDto);
+		loteriaService.cadastrar(loteria);
+		response.setData(converterParaDto(loteria));
+		return ResponseEntity.ok(response);
+	}
+	
+	@DeleteMapping(value = "/remover/{id}")
+	public ResponseEntity<Response<String>> deletar(@PathVariable("id") Long id){
+		log.info("Removendo  loteria: ", id);
+		Response<String> response = new Response<String>();
+		Loteria loteria = loteriaService.find(id);
+		if(loteria == null) {
+			log.error("Não foi encontrada nenhuma loteria com o id:  {}", id);
+			response.getErrors().add("Loteria não encontrada");
+			return ResponseEntity.badRequest().body(response);
+		}
+		loteriaService.deletar(id);
+		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping(value = "/detalhar/{id}")
+	public ResponseEntity<Response<LoteriaDto>> detalhar(@PathVariable("id") Long id){
+		log.info("Removendo  loteria: ", id);
+		Response<LoteriaDto> response = new Response<LoteriaDto>();
+		Loteria loteria = loteriaService.find(id);
+		if(loteria == null) {
+			log.error("Não foi encontrada nenhuma loteria com o id:  {}", id);
+			response.getErrors().add("Loteria não encontrada");
+			return ResponseEntity.badRequest().body(response);
+		}
+		response.setData(this.converterParaDto(loteria));
+		return ResponseEntity.ok(response);
+	}
+
 
 	private void validarLoteria(LoteriaDto loteriaDto, BindingResult result) {
 		Loteria loteria = loteriaService.findByNome(loteriaDto.getNome());
@@ -74,17 +122,30 @@ public class LoteriaController {
 		}
 		
 	}
+	
+	private void validarLoteriaAtualizacao(LoteriaDto loteriaDto, BindingResult result) {
+		Loteria loteria = loteriaService.find(loteriaDto.getId());
+		
+		if (loteria == null) {
+			result.addError(new ObjectError("Loteria", "Loteria não cadastrada."));
+		}
+	}
 
 	private LoteriaDto converterParaDto(Loteria item) {
 		LoteriaDto loteriaDto = new LoteriaDto();
 		loteriaDto.setId(item.getId());
 		loteriaDto.setNome(item.getNome());
+		loteriaDto.setDescricao(item.getDescricao());
+		loteriaDto.setDigitos(item.getDigitos());
 		return loteriaDto;
 	}
 	
 	private Loteria converterParaEntidade(LoteriaDto loteriaDto) {
 		Loteria loteria = new Loteria();
+		loteria.setId(loteriaDto.getId() == null || loteriaDto.getId() ==0 ? null : loteriaDto.getId()  );
 		loteria.setNome(loteriaDto.getNome());
+		loteria.setDescricao(loteriaDto.getDescricao());
+		loteria.setDigitos(loteriaDto.getDigitos());
 		return loteria;
 	}
 

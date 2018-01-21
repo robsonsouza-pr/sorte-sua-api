@@ -26,5 +26,12 @@ public class LoteriaService {
 	public void cadastrar(Loteria loteria) {
 		loteriaRepository.save(loteria);		
 	}
-
+	
+	public Loteria find(Long id) {
+		return loteriaRepository.findOne(id);
+	}
+	
+	public void deletar(Long id) {
+		 loteriaRepository.delete(id);
+	}
 }
