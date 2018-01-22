@@ -24,7 +24,7 @@ public class SorteioController {
 	
 	@Autowired
 	private SorteioService sorteioService;
-	
+		
 	private static final Logger log = LoggerFactory.getLogger(LoteriaController.class);
 	
 	@GetMapping
@@ -40,9 +40,8 @@ public class SorteioController {
 			return ResponseEntity.badRequest().body(response);
 		}
 		List<SorteioDto> sorteiosDto = new ArrayList<>();
-		sorteios.stream().forEach(item -> sorteiosDto.add(new SorteioDto(item)));
-		response.setData(sorteiosDto);;
+		sorteios.stream().forEach(item -> sorteiosDto.add(new SorteioDto((item))));
+		response.setData(sorteiosDto);
 		return ResponseEntity.ok(response);
 	}
-
 }

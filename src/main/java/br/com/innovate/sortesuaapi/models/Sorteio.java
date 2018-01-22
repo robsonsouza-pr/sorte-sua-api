@@ -1,9 +1,9 @@
 package br.com.innovate.sortesuaapi.models;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +25,7 @@ public class Sorteio implements Serializable {
 	private String numero;
 
 	@DateTimeFormat
+	@Column(name="datasorteio")
 	private Date dataSorteio;
 
 	private boolean premiado;

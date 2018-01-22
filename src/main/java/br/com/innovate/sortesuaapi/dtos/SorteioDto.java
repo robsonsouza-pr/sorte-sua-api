@@ -24,7 +24,9 @@ public class SorteioDto {
 	
 	public SorteioDto(Sorteio sorteio) {
 		this.setId(sorteio.getId());
-		//this.setDataSorteio(fmt.format(sorteio.getDataSorteio().getTime()));
+		if(sorteio.getDataSorteio()!=null) {
+			this.setDataSorteio(fmt.format(sorteio.getDataSorteio()));
+		}		
 		this.setNumero(sorteio.getNumero());
 	}
 	
@@ -62,7 +64,4 @@ public class SorteioDto {
 	public void setSorteado(String sorteado) {
 		this.sorteado = sorteado;
 	}
-	
-	
-	
 }
