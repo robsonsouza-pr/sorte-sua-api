@@ -1,13 +1,12 @@
 package br.com.innovate.sortesuaapi.dtos;
 
-import java.text.SimpleDateFormat;
-
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.innovate.sortesuaapi.models.Sorteio;
+import br.com.innovate.sortesuaapi.utils.DateUtils;
 
 public class SorteioDto {
 	
@@ -18,16 +17,16 @@ public class SorteioDto {
 	private String numero;
 	private String dataSorteio;
 	
-	private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-	
 	public SorteioDto() {}
 	
 	public SorteioDto(Sorteio sorteio) {
 		this.setId(sorteio.getId());
 		if(sorteio.getDataSorteio()!=null) {
-			this.setDataSorteio(fmt.format(sorteio.getDataSorteio()));
+			this.setDataSorteio(DateUtils.formatarData(sorteio.getDataSorteio()));
 		}		
 		this.setNumero(sorteio.getNumero());
+		this.setSorteado(sorteio.getAcumulou());
+		this.setTipoId(sorteio.getTipo().getId());
 	}
 	
 	@NotNull

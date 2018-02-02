@@ -16,5 +16,9 @@ public class SorteioService {
 	
 	public List<Sorteio> listar(){
 		return sorteioRepository.findAll();
+	}
+
+	public void cadastrar(Sorteio sorteio) {
+		sorteioRepository.save(sorteio);
 	}	
 }

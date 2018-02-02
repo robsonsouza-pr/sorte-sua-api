@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.innovate.sortesuaapi.dtos.LoteriaDto;
 import br.com.innovate.sortesuaapi.models.Loteria;
-import br.com.innovate.sortesuaapi.rsponse.Response;
+import br.com.innovate.sortesuaapi.response.Response;
 import br.com.innovate.sortesuaapi.services.LoteriaService;
 
 @RestController

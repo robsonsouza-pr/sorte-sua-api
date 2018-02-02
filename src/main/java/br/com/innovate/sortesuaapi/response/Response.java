@@ -1,4 +1,4 @@
-package br.com.innovate.sortesuaapi.rsponse;
+package br.com.innovate.sortesuaapi.response;
 
 import java.util.ArrayList;
 import java.util.List;

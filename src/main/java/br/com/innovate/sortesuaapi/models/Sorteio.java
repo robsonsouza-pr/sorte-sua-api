@@ -1,7 +1,9 @@
 package br.com.innovate.sortesuaapi.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +35,7 @@ public class Sorteio implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "tipo_id")
 	private Loteria tipo;
-
+	
 	public Sorteio() {
 	}
 
