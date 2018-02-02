@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Sorteio implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -27,7 +27,7 @@ public class Sorteio implements Serializable {
 	private String numero;
 
 	@DateTimeFormat
-	@Column(name="datasorteio")
+	@Column(name = "datasorteio")
 	private Date dataSorteio;
 
 	private boolean premiado;
@@ -35,7 +35,7 @@ public class Sorteio implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "tipo_id")
 	private Loteria tipo;
-	
+
 	public Sorteio() {
 	}
 
@@ -77,6 +77,20 @@ public class Sorteio implements Serializable {
 
 	public void setTipo(Loteria tipo) {
 		this.tipo = tipo;
+	}
+
+	public int getQuantidadeDezenasSorteadas() {
+		int limite = 0;
+		switch (this.getTipo().getId().intValue()) {
+		case 1:
+			limite = 15;
+			break;
+		case 2:
+			limite = 6;
+		default:
+			limite = 0;
+		}
+		return limite;
 	}
 
 	@Override

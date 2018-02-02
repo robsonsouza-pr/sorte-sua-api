@@ -20,5 +20,10 @@ public class SorteioService {
 
 	public void cadastrar(Sorteio sorteio) {
 		sorteioRepository.save(sorteio);
+	}
+
+	public Sorteio findByIdAndNumero(Long id, String numero) {
+		
+		return sorteioRepository.findByTipoIdAndNumero(id, numero);
 	}	
 }

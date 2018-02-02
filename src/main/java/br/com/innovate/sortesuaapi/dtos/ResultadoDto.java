@@ -2,6 +2,11 @@ package br.com.innovate.sortesuaapi.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import br.com.innovate.sortesuaapi.models.Resultado;
 
 public class ResultadoDto implements Serializable{
@@ -13,10 +18,15 @@ public class ResultadoDto implements Serializable{
 
 	private Long id;
 	
+	@NotNull(message="O sorteio não pode ser vazio")
 	private Long idSorteio;
 	
+	@NotNull(message = "O número do sorteio não pode ser vazio")
 	private String numeroSorteio;
 	
+	@NotEmpty(message = "As dezenas não podem ser vazias")
+	@Length(min = 1, max = 100,
+	message = "O número do concurso deve conter entre 1 e 100 caracteres.")
 	private String dezenas;
 	
 	public ResultadoDto() {}

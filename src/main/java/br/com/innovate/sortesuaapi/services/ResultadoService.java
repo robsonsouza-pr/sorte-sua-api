@@ -18,4 +18,7 @@ public class ResultadoService {
 		return resultadoRepository.findAll();
 	}
 
+	public void salvar(Resultado resultado) {
+		resultadoRepository.save(resultado);		
+	}
 }
