@@ -21,4 +21,8 @@ public class ResultadoService {
 	public void salvar(Resultado resultado) {
 		resultadoRepository.save(resultado);		
 	}
+
+	public Resultado buscarPorNumeroETipoSorteio(Long tipoId, String numero) {
+		return resultadoRepository.pegaNoMeu(tipoId, numero);
+	}
 }
