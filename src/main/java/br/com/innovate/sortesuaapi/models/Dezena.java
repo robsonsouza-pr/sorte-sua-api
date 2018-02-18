@@ -24,8 +24,8 @@ public class Dezena implements Serializable {
 
 	private String valor;
 
-	// @ManyToMany(mappedBy="dezenas")
-	// private List<Aposta> apostas = new ArrayList<>();
+	 @ManyToMany(mappedBy="dezenas")
+	 private List<Aposta> apostas = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "dezenas")
 	private List<Resultado> resultados = new ArrayList<>();

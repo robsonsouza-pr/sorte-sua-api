@@ -1,9 +1,7 @@
 package br.com.innovate.sortesuaapi.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,8 +31,8 @@ public class Sorteio implements Serializable {
 	private boolean premiado;
 
 	@ManyToOne
-	@JoinColumn(name = "tipo_id")
-	private Loteria tipo;
+	@JoinColumn(name = "loteria_id")
+	private Loteria loteria;
 
 	public Sorteio() {
 	}
@@ -71,26 +69,12 @@ public class Sorteio implements Serializable {
 		this.premiado = premiado;
 	}
 
-	public Loteria getTipo() {
-		return tipo;
+	public Loteria getLoteria() {
+		return loteria;
 	}
 
-	public void setTipo(Loteria tipo) {
-		this.tipo = tipo;
-	}
-
-	public int getQuantidadeDezenasSorteadas() {
-		int limite = 0;
-		switch (this.getTipo().getId().intValue()) {
-		case 1:
-			limite = 15;
-			break;
-		case 2:
-			limite = 6;
-		default:
-			limite = 0;
-		}
-		return limite;
+	public void setLoteria(Loteria loteria) {
+		this.loteria = loteria;
 	}
 
 	@Override
@@ -98,6 +82,7 @@ public class Sorteio implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
 		return result;
 	}
 
@@ -114,6 +99,11 @@ public class Sorteio implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (numero == null) {
+			if (other.numero != null)
+				return false;
+		} else if (!numero.equals(other.numero))
 			return false;
 		return true;
 	}

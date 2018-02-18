@@ -2,9 +2,6 @@ package br.com.innovate.sortesuaapi.repositories;
 
 import java.util.List;
 
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -25,7 +22,7 @@ public interface ResultadoRepository extends JpaRepository<Resultado, Long> {
 	List<Resultado> findAll();
 
 	@Query("select distinct(r) from Resultado r join fetch r.sorteio s  join fetch r.dezenas dezenas "
-			+ "where r.sorteio.tipo.id =?1  and r.sorteio.numero = ?2")
+			+ "where r.sorteio.loteria.id =?1  and r.sorteio.numero = ?2")
 	Resultado pegaNoMeu(Long tipoId, String numero);
 
 }

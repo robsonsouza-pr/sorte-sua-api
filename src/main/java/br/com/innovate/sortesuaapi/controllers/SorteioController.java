@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.EnumUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.innovate.sortesuaapi.dtos.SorteioDto;
+import br.com.innovate.sortesuaapi.enums.LoteriaEnum;
 import br.com.innovate.sortesuaapi.models.Loteria;
 import br.com.innovate.sortesuaapi.models.Sorteio;
 import br.com.innovate.sortesuaapi.response.Response;
@@ -92,8 +94,9 @@ public class SorteioController {
 
 	private Sorteio converterParaEntidade(SorteioDto sorteioDto) {
 		Sorteio sorteio = new Sorteio();
-		Loteria loteria  = loteriaService.find(sorteioDto.getTipoId());
-		sorteio.setTipo(loteria);
+		//Loteria loteria  = loteriaService.find(sorteioDto.getTipoId());
+		Loteria loteria = LoteriaEnum.getEntity(sorteioDto.getLoteria());
+		sorteio.setLoteria(loteria);
 		sorteio.setNumero(sorteioDto.getNumero());
 		sorteio.setPremiado("Sim".equals( sorteioDto.getSorteado())? true : false);
 		sorteio.setDataSorteio(DateUtils.converterParaDate(sorteioDto.getDataSorteio()));
@@ -103,9 +106,16 @@ public class SorteioController {
 
 
 	private void validarSorteio(SorteioDto sorteio, BindingResult result) {
-		Loteria loteria = loteriaService.find(sorteio.getTipoId());
-		if(loteria == null) {
-			new ObjectError("Loteria", "Loteria não cadastrada.");
+		
+		if (EnumUtils.isValidEnum(LoteriaEnum.class, sorteio.getLoteria())) {
+			//lancamento.setTipo(TipoEnum.valueOf(lancamentoDto.getTipo()));
+			Loteria loteria = loteriaService.find(LoteriaEnum.valueOf(sorteio.getLoteria()).getId());
+			if(loteria == null) {
+				new ObjectError("Loteria", "Loteria não cadastrada.");
+			}
+			
+		} else {
+			result.addError(new ObjectError("tipo", "Tipo inválido."));
 		}
 	}
 }

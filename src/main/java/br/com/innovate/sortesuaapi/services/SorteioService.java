@@ -24,6 +24,6 @@ public class SorteioService {
 
 	public Sorteio findByIdAndNumero(Long id, String numero) {
 		
-		return sorteioRepository.findByTipoIdAndNumero(id, numero);
+		return sorteioRepository.findByLoteriaIdAndNumero(id, numero);
 	}	
 }

@@ -11,6 +11,8 @@ import javax.persistence.PrePersist;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import br.com.innovate.sortesuaapi.enums.LoteriaEnum;
+
 @Entity
 public class Loteria implements Serializable{
 	
@@ -23,7 +25,9 @@ public class Loteria implements Serializable{
 	private Long id;
 	private String nome;
 	private String descricao;
-	private int digitos;
+	private Integer minimo;
+	private Integer maximo;
+	private Integer resultado;
 
 	@DateTimeFormat
 	private Calendar dataCadastro;
@@ -46,16 +50,37 @@ public class Loteria implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public int getDigitos() {
-		return digitos;
-	}
-	public void setDigitos(int digitos) {
-		this.digitos = digitos;
-	}
 	
-    @PrePersist
+    public int getMinimo() {
+		return minimo;
+	}
+	public void setMinimo(int minimo) {
+		this.minimo = minimo;
+	}
+	public int getMaximo() {
+		return maximo;
+	}
+	public void setMaximo(int maximo) {
+		this.maximo = maximo;
+	}
+	public int getResultado() {
+		return resultado;
+	}
+	public void setResultado(int resultado) {
+		this.resultado = resultado;
+	}
+	public Calendar getDataCadastro() {
+		return dataCadastro;
+	}
+	public void setDataCadastro(Calendar dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+	@PrePersist
     public void prePersist() {
         dataCadastro = Calendar.getInstance();;
     }
+	public LoteriaEnum getEnum() {		
+		return LoteriaEnum.valueOf(id);
+	}
 
 }

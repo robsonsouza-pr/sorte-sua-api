@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
-public class Resultado implements Serializable {
+public class Aposta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

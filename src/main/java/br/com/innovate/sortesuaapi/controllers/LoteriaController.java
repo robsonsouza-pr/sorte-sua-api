@@ -136,7 +136,9 @@ public class LoteriaController {
 		loteriaDto.setId(item.getId());
 		loteriaDto.setNome(item.getNome());
 		loteriaDto.setDescricao(item.getDescricao());
-		loteriaDto.setDigitos(item.getDigitos());
+		loteriaDto.setMaximo(item.getMaximo());
+		loteriaDto.setMinimo(item.getMinimo());
+		loteriaDto.setResultado(item.getResultado());
 		return loteriaDto;
 	}
 	
@@ -145,7 +147,9 @@ public class LoteriaController {
 		loteria.setId(loteriaDto.getId() == null || loteriaDto.getId() ==0 ? null : loteriaDto.getId()  );
 		loteria.setNome(loteriaDto.getNome());
 		loteria.setDescricao(loteriaDto.getDescricao());
-		loteria.setDigitos(loteriaDto.getDigitos());
+		loteria.setMaximo(loteriaDto.getMaximo());
+		loteria.setMinimo(loteriaDto.getMinimo());
+		loteria.setResultado(loteriaDto.getResulltado());
 		return loteria;
 	}
 

@@ -7,10 +7,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import br.com.innovate.sortesuaapi.models.Resultado;
+import br.com.innovate.sortesuaapi.models.Aposta;
 import br.com.innovate.sortesuaapi.utils.DezenaUtils;
 
-public class ResultadoDto implements Serializable{
+public class ApostaDto implements Serializable{
 	
 	/**
 	 * 
@@ -30,9 +30,9 @@ public class ResultadoDto implements Serializable{
 	message = "O número do concurso deve conter entre 1 e 100 caracteres.")
 	private String dezenas;
 	
-	public ResultadoDto() {}
+	public ApostaDto() {}
 	
-	public ResultadoDto(Resultado item) {
+	public ApostaDto(Aposta item) {
 		this.id = item.getId();
 		this.idSorteio = item.getSorteio().getId();
 		this.numeroSorteio = item.getSorteio().getNumero();

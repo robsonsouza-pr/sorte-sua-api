@@ -16,6 +16,9 @@ public class SorteioDto {
 	message = "O número do concurso deve conter entre 1 e 10 caracteres.")
 	private String numero;
 	private String dataSorteio;
+	@NotNull
+	private String loteria;
+	private String sorteado;
 	
 	public SorteioDto() {}
 	
@@ -26,12 +29,8 @@ public class SorteioDto {
 		}		
 		this.setNumero(sorteio.getNumero());
 		this.setSorteado(sorteio.getAcumulou());
-		this.setTipoId(sorteio.getTipo().getId());
+		this.setLoteria(sorteio.getLoteria().getEnum().toString());
 	}
-	
-	@NotNull
-	private Long tipoId;
-	private String sorteado;
 	
 	public Long getId() {
 		return id;
@@ -48,15 +47,19 @@ public class SorteioDto {
 	public String getDataSorteio() {
 		return dataSorteio;
 	}
+	
 	public void setDataSorteio(String dataSorteio) {
 		this.dataSorteio = dataSorteio;
 	}
-	public Long getTipoId() {
-		return tipoId;
+
+	public String getLoteria() {
+		return loteria;
 	}
-	public void setTipoId(Long tipoId) {
-		this.tipoId = tipoId;
+
+	public void setLoteria(String loteria) {
+		this.loteria = loteria;
 	}
+
 	public String getSorteado() {
 		return sorteado;
 	}

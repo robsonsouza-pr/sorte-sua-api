@@ -27,7 +27,9 @@ public class LoteriaRepositoryTest {
 	public void setUp() throws Exception {
 		Loteria loteria = new Loteria();
 		loteria.setNome(NOME);
-		loteria.setDigitos(25);
+		loteria.setMaximo(18);
+		loteria.setMinimo(15);
+		loteria.setResultado(15);
 		loteria.setDescricao("A loteria com mais chances de vencer");
 		
 		this.loteriaRepository.save(loteria);

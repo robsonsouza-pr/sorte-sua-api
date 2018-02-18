@@ -18,22 +18,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.innovate.sortesuaapi.dtos.ResultadoDto;
+import br.com.innovate.sortesuaapi.dtos.ApostaDto;
+import br.com.innovate.sortesuaapi.models.Aposta;
 import br.com.innovate.sortesuaapi.models.Dezena;
-import br.com.innovate.sortesuaapi.models.Resultado;
+import br.com.innovate.sortesuaapi.models.Loteria;
 import br.com.innovate.sortesuaapi.models.Sorteio;
 import br.com.innovate.sortesuaapi.response.Response;
-import br.com.innovate.sortesuaapi.services.ResultadoService;
+import br.com.innovate.sortesuaapi.services.ApostaService;
 import br.com.innovate.sortesuaapi.services.SorteioService;
 import br.com.innovate.sortesuaapi.utils.DezenaUtils;
 
 @RestController
-@RequestMapping(value="/api/resultados")
+@RequestMapping(value="/api/apostas")
 @CrossOrigin(origins = "*")
-public class ResultadoController {
+public class ApostaController {
 	
 	@Autowired
-	private ResultadoService resultadoService;
+	private ApostaService apostaService;
 	
 	@Autowired
 	private SorteioService sorteioService;
@@ -41,56 +42,62 @@ public class ResultadoController {
 	private static final Logger log = LoggerFactory.getLogger(LoteriaController.class);
 	
 	@GetMapping
-	public ResponseEntity <Response<List<ResultadoDto>>> listar(){
-		Response<List<ResultadoDto>> response = new Response<List<ResultadoDto>>();
-		List<Resultado> resultados = resultadoService.listar();
+	public ResponseEntity <Response<List<ApostaDto>>> listar(){
+		log.info("Listando apostas");
+		Response<List<ApostaDto>> response = new Response<>();
+		List<Aposta> resultados = apostaService.listar();
 		if(resultados.isEmpty()) {
+			log.info("Erro ao listar as  apostas");
 			response.getErrors().add("Nenhum resultado encontrado");
 			return ResponseEntity.badRequest().body(response);
 		}
-		List<ResultadoDto> dtos = new ArrayList<>();
+		List<ApostaDto> dtos = new ArrayList<>();
 		
-		resultados.stream().forEach(item->dtos.add(new ResultadoDto(item)));
+		resultados.stream().forEach(item->dtos.add(new ApostaDto(item)));
 		response.setData(dtos);
 		return ResponseEntity.ok(response);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Response<ResultadoDto>> cadastrar(@Valid @RequestBody ResultadoDto resultadoDto, BindingResult result){
-		Response<ResultadoDto> response = new Response<ResultadoDto>();
-		Resultado resultado = validar(resultadoDto, result);
+	public ResponseEntity<Response<ApostaDto>> cadastrar(@Valid @RequestBody ApostaDto apostaDto, BindingResult result){
+		Response<ApostaDto> response = new Response<>();
+		Aposta aposta = validar(apostaDto, result);
 		if(result.hasErrors()) {
-			log.info("Foram encontrados erros durante a validação do resultado");
+			log.info("Foram encontrados erros durante a validação da aposta");
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
-		resultadoService.salvar(resultado);
-		response.setData(new ResultadoDto(resultado));
+		apostaService.salvar(aposta);
+		response.setData(new ApostaDto(aposta));
 		return ResponseEntity.ok(response);
 		
 	}
 
-	private Resultado validar(ResultadoDto resultadoDto, BindingResult result) {
-	 Resultado resultado = new Resultado();
+	private Aposta validar(ApostaDto apostaDto, BindingResult result) {
+	 Aposta aposta = new Aposta();
 	 
-	 if(resultadoDto.getId() != null) {
-		 resultado.setId(resultadoDto.getId());
+	 if(apostaDto.getId() != null) {
+		 aposta.setId(apostaDto.getId());
 	 }
 	 
-	 Sorteio sorteio = sorteioService.findByIdAndNumero(resultadoDto.getIdSorteio(), resultadoDto.getNumeroSorteio());
+	 Sorteio sorteio = sorteioService.findByIdAndNumero(apostaDto.getIdSorteio(), apostaDto.getNumeroSorteio());
 	 if(sorteio == null) {		 
 		 result.addError(new ObjectError("Sorteio", "Não foi encontrado nenhum sorteio para esse id e número"));
 	 }
-	 resultado.setSorteio(sorteio);
+	 aposta.setSorteio(sorteio);
 	 
-	 List<Dezena> dezenas = DezenaUtils.converterParaDezenas(resultadoDto.getDezenas());
+	 List<Dezena> dezenas = DezenaUtils.converterParaDezenas(apostaDto.getDezenas());
 	 if(dezenas.isEmpty()) {
-		 result.addError(new ObjectError("Dezena", "Não foram encontradas dezenas válidas para o resultado"));
-	 }else if(!dezenas.isEmpty() && dezenas.size() != sorteio.getLoteria().getResultado()) {
+		 result.addError(new ObjectError("Dezena", "Não foram encontradas dezenas válidas para a aposta"));
+	 }else if(! isQuantidadeValida(dezenas.size(), sorteio.getLoteria())) {
 		 result.addError(new ObjectError("Dezena", "A quantidade de dezenas excedeu a quantidade máxima para o tipo de sorteio"));
 	 }
-	 resultado.setDezenas(dezenas);
-		return resultado;
+	 aposta.setDezenas(dezenas);
+		return aposta;
 	}
 
+	private boolean isQuantidadeValida(int size, Loteria loteria) {
+		
+		return size >=loteria.getMinimo() && size <=loteria.getMaximo();
+	}
 }

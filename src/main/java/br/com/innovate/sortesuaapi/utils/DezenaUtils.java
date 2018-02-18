@@ -57,4 +57,13 @@ public class DezenaUtils {
 		return retorno;
 	}
 
+	public static String getDezenasFormatadas(List<Dezena> dezenas) {
+		StringBuilder dezenasFormatadas = new StringBuilder();
+		if (dezenas != null && !dezenas.isEmpty()) {
+			dezenas.sort((Dezena o1, Dezena o2) -> o1.getId().intValue() - o2.getId().intValue());
+			dezenas.stream().forEach(item -> dezenasFormatadas.append(item.getValor() + " - "));
+			return dezenasFormatadas.substring(0, dezenasFormatadas.lastIndexOf("-") - 1);
+		}
+		return dezenasFormatadas.toString();
+	}
 }

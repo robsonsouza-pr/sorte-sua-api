@@ -9,10 +9,10 @@ import br.com.innovate.sortesuaapi.models.Sorteio;
 
 @NamedQueries({
 	@NamedQuery(name = "SorteioRepository.findByTipoIdAndNumero", 
-			query = "select s from sorteio s where s.tipo.id = :id and s.numero :numero") })
+			query = "select s from sorteio s where s.loteria.id = :id and s.numero :numero") })
 public interface SorteioRepository extends  JpaRepository<Sorteio, Long> {
 	
 	
-	 Sorteio findByTipoIdAndNumero(Long id, String numero);
+	 Sorteio findByLoteriaIdAndNumero(Long id, String numero);
 
 }

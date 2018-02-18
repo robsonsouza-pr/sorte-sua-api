@@ -1,5 +1,7 @@
 package br.com.innovate.sortesuaapi.dtos;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -16,7 +18,12 @@ public class LoteriaDto {
 	message = "A descriçãp deve conter entre 5 e 100 caracteres.")
 	private String descricao;
 	
-	private int digitos;
+	@NotNull(message="O mínimo de dezenas não pode ser vazio")
+	private int minimo;
+	@NotNull(message="O máximo de dezenas não pode ser vazio")
+	private int maximo;
+	@NotNull(message="A quantidade de dezenas de um resultado não pode ser vazia")
+	private int resultado;
 	
 	public Long getId() {
 		return id;
@@ -42,12 +49,27 @@ public class LoteriaDto {
 		this.descricao = descricao;
 	}
 
-	public int getDigitos() {
-		return digitos;
+	public int getMinimo() {
+		return minimo;
 	}
 
-	public void setDigitos(int digitos) {
-		this.digitos = digitos;
+	public void setMinimo(int minimo) {
+		this.minimo = minimo;
 	}
-	
+
+	public int getMaximo() {
+		return maximo;
+	}
+
+	public void setMaximo(int maximo) {
+		this.maximo = maximo;
+	}
+
+	public int getResulltado() {
+		return resultado;
+	}
+
+	public void setResultado(int resulltado) {
+		this.resultado = resulltado;
+	}	
 }
