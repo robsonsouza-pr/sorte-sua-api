@@ -6,13 +6,10 @@ import javax.validation.constraints.NotNull;
 
 public class ConferenciaApostaDto implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	private Long idLoteria;
+	private String loteria;
 
 	@NotNull
 	private String numeroSorteio;
@@ -24,12 +21,12 @@ public class ConferenciaApostaDto implements Serializable {
 	public ConferenciaApostaDto() {
 	}
 
-	public Long getIdLoteria() {
-		return idLoteria;
+	public String getLoteria() {
+		return loteria;
 	}
 
-	public void setIdLoteria(Long idLoteria) {
-		this.idLoteria = idLoteria;
+	public void setLoteria(String loteria) {
+		this.loteria = loteria;
 	}
 
 	public String getNumeroSorteio() {

@@ -19,8 +19,8 @@ public class ResultadoDto implements Serializable{
 
 	private Long id;
 	
-	@NotNull(message="O sorteio não pode ser vazio")
-	private Long idSorteio;
+	@NotNull(message="A loteria não pode ser vazia")
+	private String loteria;
 	
 	@NotNull(message = "O número do sorteio não pode ser vazio")
 	private String numeroSorteio;
@@ -34,7 +34,7 @@ public class ResultadoDto implements Serializable{
 	
 	public ResultadoDto(Resultado item) {
 		this.id = item.getId();
-		this.idSorteio = item.getSorteio().getId();
+		this.loteria = item.getSorteio().getLoteria().getEnum().toString();
 		this.numeroSorteio = item.getSorteio().getNumero();
 		this.dezenas = DezenaUtils.getDezenasFormatadas(item.getDezenas());
 	}
@@ -42,15 +42,19 @@ public class ResultadoDto implements Serializable{
 	public Long getId() {
 		return id;
 	}
+		
+	public String getLoteria() {
+		return loteria;
+	}
+
+	public void setLoteria(String loteria) {
+		this.loteria = loteria;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getIdSorteio() {
-		return idSorteio;
-	}
-	public void setIdSorteio(Long idSorteio) {
-		this.idSorteio = idSorteio;
-	}
+	
 	public String getNumeroSorteio() {
 		return numeroSorteio;
 	}
