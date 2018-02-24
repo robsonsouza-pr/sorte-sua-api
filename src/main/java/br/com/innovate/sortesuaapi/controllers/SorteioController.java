@@ -108,7 +108,7 @@ public class SorteioController {
 	private void validarSorteio(SorteioDto sorteio, BindingResult result) {
 		
 		if (EnumUtils.isValidEnum(LoteriaEnum.class, sorteio.getLoteria())) {
-			//lancamento.setTipo(TipoEnum.valueOf(lancamentoDto.getTipo()));
+			
 			Loteria loteria = loteriaService.find(LoteriaEnum.valueOf(sorteio.getLoteria()).getId());
 			if(loteria == null) {
 				new ObjectError("Loteria", "Loteria não cadastrada.");

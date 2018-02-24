@@ -96,7 +96,7 @@ public class ResultadoController {
 				result.addError(new ObjectError("Dezena",
 						"A quantidade de dezenas excedeu a quantidade máxima para o tipo de sorteio"));
 			}
-			
+
 			resultado.setDezenas(dezenas);
 
 		} else {

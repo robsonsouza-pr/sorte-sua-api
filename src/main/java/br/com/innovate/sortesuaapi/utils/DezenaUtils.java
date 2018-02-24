@@ -2,7 +2,9 @@ package br.com.innovate.sortesuaapi.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.innovate.sortesuaapi.models.Dezena;
@@ -51,6 +53,17 @@ public class DezenaUtils {
 		if (dezenas != null && !dezenas.isEmpty()) {
 			dezenas.sort((Dezena o1, Dezena o2) -> o1.getId().intValue() - o2.getId().intValue());
 			dezenas.stream().forEach(item -> dezenasFormatadas.append(item.getValor() + " - "));
+			return dezenasFormatadas.substring(0, dezenasFormatadas.lastIndexOf("-") - 1);
+		}
+		return dezenasFormatadas.toString();
+	}
+
+	public static String getDezenasFormatadas(Set<Integer> numeros) {
+		StringBuilder dezenasFormatadas = new StringBuilder();
+		if (numeros != null && !numeros.isEmpty()) {
+			List<Integer> lista = new ArrayList<>(numeros);
+			Collections.sort(lista);
+			lista.stream().forEach(item -> dezenasFormatadas.append(item + " - "));
 			return dezenasFormatadas.substring(0, dezenasFormatadas.lastIndexOf("-") - 1);
 		}
 		return dezenasFormatadas.toString();

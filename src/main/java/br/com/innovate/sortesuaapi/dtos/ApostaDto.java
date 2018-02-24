@@ -20,7 +20,7 @@ public class ApostaDto implements Serializable{
 	private Long id;
 	
 	@NotNull(message="O sorteio não pode ser vazio")
-	private Long idSorteio;
+	private String loteria;
 	
 	@NotNull(message = "O número do sorteio não pode ser vazio")
 	private String numeroSorteio;
@@ -34,7 +34,7 @@ public class ApostaDto implements Serializable{
 	
 	public ApostaDto(Aposta item) {
 		this.id = item.getId();
-		this.idSorteio = item.getSorteio().getId();
+		this.loteria = item.getSorteio().getLoteria().getNome();
 		this.numeroSorteio = item.getSorteio().getNumero();
 		this.dezenas = DezenaUtils.getDezenasFormatadas(item.getDezenas());
 	}
@@ -45,12 +45,15 @@ public class ApostaDto implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getIdSorteio() {
-		return idSorteio;
+	
+	public String getLoteria() {
+		return loteria;
 	}
-	public void setIdSorteio(Long idSorteio) {
-		this.idSorteio = idSorteio;
+
+	public void setLoteria(String loteria) {
+		this.loteria = loteria;
 	}
+
 	public String getNumeroSorteio() {
 		return numeroSorteio;
 	}
