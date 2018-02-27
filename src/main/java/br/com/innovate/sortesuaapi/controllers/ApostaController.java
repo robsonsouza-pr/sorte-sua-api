@@ -3,6 +3,7 @@ package br.com.innovate.sortesuaapi.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.innovate.sortesuaapi.dtos.ApostaDto;
+import br.com.innovate.sortesuaapi.dtos.RelatorioDto;
 import br.com.innovate.sortesuaapi.dtos.SugestaoDto;
 import br.com.innovate.sortesuaapi.enums.LoteriaEnum;
 import br.com.innovate.sortesuaapi.models.Aposta;
@@ -84,12 +86,24 @@ public class ApostaController {
 
 		Set<Integer> numeros = apostaService.sortearNumeros(15);
 
+		List<RelatorioDto> relatorios = apostaService.findDezenasMaisSorteadas(1L);
 		SugestaoDto sugestao = new SugestaoDto();
 		sugestao.setJogoAleatorio(DezenaUtils.getDezenasFormatadas(numeros));
+		
+		String maisSorteados = encontrarMaisSorteados(15, relatorios);
+		sugestao.setJogoMaisSorteados(maisSorteados);
+		sugestao.setRelatorios(relatorios);
 
 		response.setData(sugestao);
 
 		return ResponseEntity.ok(response);
+	}
+
+	private String encontrarMaisSorteados(int i, List<RelatorioDto> relatorios) {
+		List<RelatorioDto> maisSorteados = relatorios.stream().limit(15).collect(Collectors.toList());
+		List<String> lista = new ArrayList<>();
+		maisSorteados.stream().forEach(item-> lista.add(item.getValor()));
+		return DezenaUtils.formatarListaValores(lista);
 	}
 
 	private Aposta validar(ApostaDto apostaDto, BindingResult result) {

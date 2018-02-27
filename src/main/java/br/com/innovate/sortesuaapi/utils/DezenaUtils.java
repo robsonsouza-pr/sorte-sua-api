@@ -68,4 +68,14 @@ public class DezenaUtils {
 		}
 		return dezenasFormatadas.toString();
 	}
+
+	public static String formatarListaValores(List<String> valores) {
+		StringBuilder dezenasFormatadas = new StringBuilder();
+		if (valores != null && !valores.isEmpty()) {
+			Collections.sort(valores);
+			valores.stream().forEach(item -> dezenasFormatadas.append(item + " - "));
+			return dezenasFormatadas.substring(0, dezenasFormatadas.lastIndexOf("-") - 1);
+		}
+		return dezenasFormatadas.toString();
+	}
 }
