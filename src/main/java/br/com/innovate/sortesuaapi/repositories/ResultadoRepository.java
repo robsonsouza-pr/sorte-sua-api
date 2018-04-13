@@ -18,7 +18,8 @@ public interface ResultadoRepository extends JpaRepository<Resultado, Long> {
 	
 	@Query("select distinct(r) from Resultado r"
 			+ " join fetch r.sorteio s "
-			+ " left join fetch r.dezenas dezenas")
+			+ " left join fetch r.dezenas dezenas"
+			+ " order by r.sorteio.numero")
 	List<Resultado> findAll();
 
 	@Query("select distinct(r) from Resultado r join fetch r.sorteio s  join fetch r.dezenas dezenas "
