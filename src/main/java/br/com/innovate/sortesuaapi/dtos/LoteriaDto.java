@@ -25,6 +25,8 @@ public class LoteriaDto {
 	@NotNull(message="A quantidade de dezenas de um resultado não pode ser vazia")
 	private int resultado;
 	
+	private String loteriaEnum;
+	
 	public Long getId() {
 		return id;
 	}
@@ -71,5 +73,13 @@ public class LoteriaDto {
 
 	public void setResultado(int resulltado) {
 		this.resultado = resulltado;
+	}
+
+	public String getLoteriaEnum() {
+		return loteriaEnum;
+	}
+
+	public void setLoteriaEnum(String loteriaEnum) {
+		this.loteriaEnum = loteriaEnum;
 	}	
 }

@@ -98,6 +98,19 @@ public class ApostaController {
 
 		return ResponseEntity.ok(response);
 	}
+	
+	@GetMapping("/sugerir/aleatorio")
+	public ResponseEntity<Response<SugestaoDto>> sugerirAleatorio() {
+		Response<SugestaoDto> response = new Response<>();
+		Set<Integer> numeros = apostaService.sortearNumeros(15);
+		SugestaoDto sugestao = new SugestaoDto();
+		sugestao.setJogoAleatorio(DezenaUtils.getDezenasFormatadas(numeros));
+
+		response.setData(sugestao);
+
+		return ResponseEntity.ok(response);
+	}
+
 
 	private String encontrarMaisSorteados(int i, List<RelatorioDto> relatorios) {
 		List<RelatorioDto> maisSorteados = relatorios.stream().limit(15).collect(Collectors.toList());
