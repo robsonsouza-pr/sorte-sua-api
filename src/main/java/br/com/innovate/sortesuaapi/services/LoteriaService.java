@@ -28,10 +28,10 @@ public class LoteriaService {
 	}
 	
 	public Loteria find(Long id) {
-		return loteriaRepository.findOne(id);
+		return loteriaRepository.findById(id).get();
 	}
 	
 	public void deletar(Long id) {
-		 loteriaRepository.delete(id);
+		 loteriaRepository.deleteById(id);
 	}
 }

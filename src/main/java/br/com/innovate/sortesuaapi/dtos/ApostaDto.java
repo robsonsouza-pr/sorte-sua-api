@@ -2,10 +2,10 @@ package br.com.innovate.sortesuaapi.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.innovate.sortesuaapi.models.Aposta;
 import br.com.innovate.sortesuaapi.utils.DezenaUtils;

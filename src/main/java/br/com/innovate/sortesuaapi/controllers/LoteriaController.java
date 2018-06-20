@@ -54,6 +54,7 @@ public class LoteriaController {
 	}
 	
 	@PostMapping
+	//@PreAuthorize("hasAnyRole('ADMIN')") para adicionar perfis
 	public ResponseEntity<Response<LoteriaDto>> cadastrar(@Valid @RequestBody LoteriaDto loteriaDto, BindingResult result){
 		log.info("Cadastrando uma loteria");
 		Response<LoteriaDto> response = new Response<LoteriaDto>();
